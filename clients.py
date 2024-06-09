@@ -21,7 +21,7 @@ class Client():
         model.train()
 
         loss_fn = nn.CrossEntropyLoss()
-        optimizer = torch.optim.Adam(model.parameters())
+        optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
 
         print(f'Training Client: {self.client_id}')
         for i in tqdm(range(n_client_epochs)): # Batch_size: 1 -> FedSGD, b -> FedAvg
