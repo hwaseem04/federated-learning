@@ -7,7 +7,7 @@ from data import CustomDataset # Dont remove this. You will get error while load
 from clients import Client
 from tqdm import tqdm
 from torch.utils.data import DataLoader
-from torch.optim import Adam 
+from torch.optim import SGD 
 
 def server_aggregate_weights(n_clients, device): # for FedAvg
 
@@ -110,7 +110,7 @@ def fed(n_clients, n_server_epochs, batch_size, device,  n_client_epochs, algori
     # Initialize server: Store initial random weights so that clients can use
     model = CNNModel().to(device)
     torch.save(model.state_dict(), './model_cache/global_model_state.pkl')
-    optimizer = Adam(model.parameters(), lr=0.001)
+    optimizer = SGD(model.parameters(), lr=0.001)
 
     client_logs = {}
 
@@ -152,8 +152,8 @@ def fed(n_clients, n_server_epochs, batch_size, device,  n_client_epochs, algori
 # Initialize server and client parameters
 n_clients = 10
 n_server_epochs = 10
-n_client_epochs = 3
-batch_size = 128
+n_client_epochs = 1
+batch_size = 1
 
 if n_client_epochs == 1:
     algorithm= 'fedsgd'
